@@ -1,0 +1,44 @@
+display_name: Musik Player
+package_name: musikplayer
+
+maintainer:
+  name: musikplayer
+  email: musikplayer@gmail.com
+
+priority: optional
+
+section: x11
+
+installed_size: 15700
+
+dependencies:
+  - libappindicator3-1 | libayatana-appindicator3-1
+  - gir1.2-appindicator3-0.1 | gir1.2-ayatanaappindicator3-0.1
+  - libsecret-1-0
+  - libnotify-bin
+  - libjsoncpp25
+  - libmpv1 | libmpv2
+  - xdg-user-dirs
+
+essential: false
+
+icon: linux/assets/musikplayer.png
+
+postinstall_scripts:
+  - echo "Removing MPV Media Player entry from applications menu..."
+  - rm -f /usr/share/applications/mpv.desktop
+
+postuninstall_scripts:
+  - echo "Sorry to see you go."
+
+keywords:
+  - Musik
+  - Pemutar Musik
+
+generic_name: Musik Player
+
+categories:
+  - Audio
+  - Multimedia
+
+startup_notify: true
