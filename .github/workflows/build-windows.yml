@@ -1,34 +1,26 @@
+name: Flutter CI
 
-name: Build Windows
-
-on:
-  push:
-    branches:
-      - main  # Atur sesuai nama branch yang Anda gunakan
+on: push
 
 jobs:
-  build:
+  build-and-release-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'  # Ganti dengan versi Flutter yang Anda gunakan
-
-      - name: Install dependencies
+          channel: 'stable'
+          architecture: x64
+          flutter-version: '3.24.3'
+      - name: Install project dependencies
         run: flutter pub get
-
-      - name: Build Windows
-        run: flutter build windows
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Enable Windows build
+        run: flutter config --enable-windows-desktop
+      - name: Build Windows executable
+        run: flutter build windows --release
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v3
         with:
-          name: windows-build
-          path: dist
-          
-          
+          name: MyFlutterApp
+          path: build/windows/runner/Release/MyFlutterApp.exe  # Replace with your actual executable name
