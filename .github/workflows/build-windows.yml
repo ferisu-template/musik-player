@@ -1,1 +1,32 @@
 
+name: Build Windows
+
+on:
+  push:
+    branches:
+      - main  # Atur sesuai nama branch yang Anda gunakan
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'  # Ganti dengan versi Flutter yang Anda gunakan
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Windows
+        run: flutter build windows
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-build
+          path: build/windows/runner/Release/
